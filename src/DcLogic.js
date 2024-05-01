@@ -17,7 +17,16 @@ export default class{
 		dcWorld.scene.add(dcWorld.camera);
 		dcWorld.scene.add(dc.defaultLights);
 
-		dcWorld.add(models.dvijcock.scene);
+		dcWorld.add(models.test.scene);
+
+		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
+		player.position.set(0,10,0);
+		player.dcData = {
+			btShape: true,
+			mass: 1,
+		}
+		dcWorld.add(player);
+		this.moveController = new dc.MoveController(player, this.controls, 0.5, 4);
 	}
 	destroy(){
 		this.controls.dispose();
