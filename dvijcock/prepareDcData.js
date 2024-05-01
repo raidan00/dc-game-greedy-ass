@@ -28,18 +28,30 @@ export default function(objThree){
 		}
 	}
 	if(objThree.dcData.btShape === true){
-		let coords = objThree.geometry.attributes.position.array;
-		const shape = new Ammo.btConvexHullShape();
+		if(objThree.dcData.mass){
+			let coords = objThree.geometry.attributes.position.array;
+			const shape = new Ammo.btConvexHullShape();
+			for ( let i = 0, il = coords.length; i < il; i += 3 ) {
+				let tmpVec = ammoTmp.vec( coords[ i ], coords[ i + 1 ], coords[ i + 2 ] );
+				const lastOne = ( i >= ( il - 3 ) );
+				shape.addPoint( tmpVec, lastOne );
+			}
+			objThree.dcData.btShape = shape;
+		}else{
+			var mesh = new Ammo.btTriangleMesh(true, true);
 
-		for ( let i = 0, il = coords.length; i < il; i += 3 ) {
-
-			let tmpVec = ammoTmp.vec( coords[ i ], coords[ i + 1 ], coords[ i + 2 ] );
-			const lastOne = ( i >= ( il - 3 ) );
-			shape.addPoint( tmpVec, lastOne );
-
+			let coords = objThree.geometry.attributes.position.array;
+			console.log(objThree.geometry)
+			for (let i = 0; i < coords.length; i += 9 ) {
+				mesh.addTriangle(
+					new Ammo.btVector3(coords[i+0], coords[i+1], coords[i+2]),
+					new Ammo.btVector3(coords[i+3], coords[i+4], coords[i+5]),
+					new Ammo.btVector3(coords[i+6], coords[i+7], coords[i+8]),
+					false
+				);
+			}
+			objThree.dcData.btShape = new Ammo.btBvhTriangleMeshShape(mesh, true, true);
 		}
-
-		objThree.dcData.btShape = shape;
 	}
 	objThree.dcData.btShape.setMargin(0.05);
 }
