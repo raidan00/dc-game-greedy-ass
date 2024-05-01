@@ -29,11 +29,11 @@ export default function(objThree){
 	}
 	if(objThree.dcData.btShape === true){
 		if(objThree.dcData.mass){
-			let coords = objThree.geometry.attributes.position.array;
+			let vert = objThree.geometry.attributes.position.array;
 			const shape = new Ammo.btConvexHullShape();
-			for ( let i = 0, il = coords.length; i < il; i += 3 ) {
-				let tmpVec = ammoTmp.vec( coords[ i ], coords[ i + 1 ], coords[ i + 2 ] );
-				const lastOne = ( i >= ( il - 3 ) );
+			for (let i = 0; i < vert.length; i += 3) {
+				let tmpVec = ammoTmp.vec(vert[i], vert[i+1], vert[i+2]);
+				const lastOne = ( i >= (vert.length-3) );
 				shape.addPoint( tmpVec, lastOne );
 			}
 			objThree.dcData.btShape = shape;
