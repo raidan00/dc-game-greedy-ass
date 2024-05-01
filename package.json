@@ -9,7 +9,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
-		"dvijcock": "^1.0.3",
+		"dvijcock": "file:dvijcock",
 		"svelte": "^4.2.12",
 		"three": "^0.164.1",
 		"vite": "^5.2.0"
