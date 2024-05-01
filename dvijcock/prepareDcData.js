@@ -39,14 +39,14 @@ export default function(objThree){
 			objThree.dcData.btShape = shape;
 		}else{
 			var mesh = new Ammo.btTriangleMesh(true, true);
-
-			let coords = objThree.geometry.attributes.position.array;
-			console.log(objThree.geometry)
-			for (let i = 0; i < coords.length; i += 9 ) {
+			let index = objThree.geometry.index.array;
+			let vert = objThree.geometry.attributes.position.array;
+			console.log(index, vert);
+			for (let i = 0; i < index.length; i += 3 ) {
 				mesh.addTriangle(
-					new Ammo.btVector3(coords[i+0], coords[i+1], coords[i+2]),
-					new Ammo.btVector3(coords[i+3], coords[i+4], coords[i+5]),
-					new Ammo.btVector3(coords[i+6], coords[i+7], coords[i+8]),
+					new Ammo.btVector3(vert[index[i+0]*3+0], vert[index[i+0]*3+1], vert[index[i+0]*3+2]),
+					new Ammo.btVector3(vert[index[i+1]*3+0], vert[index[i+1]*3+1], vert[index[i+1]*3+2]),
+					new Ammo.btVector3(vert[index[i+2]*3+0], vert[index[i+2]*3+1], vert[index[i+2]*3+2]),
 					false
 				);
 			}
