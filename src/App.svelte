@@ -1,16 +1,11 @@
 <script>
 	import { onMount, onDestroy } from "svelte";
-	import { dcInit, DcWorld } from "dvijcock";
-	import { loadModels } from "./models.js";
+	import {  DcWorld } from "dvijcock";
 	import DcLogic from "./DcLogic.js";
 
 	let domEl;
 	let dc;
-	onMount(async() => {
-		await Promise.all([
-			dcInit(),
-			loadModels(),
-		]);
+	onMount(() => {
 		dc = new DcWorld();
 		dc.setDomElement(domEl);
 		dc.setLogic(new DcLogic);

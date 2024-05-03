@@ -1,8 +1,17 @@
 import './app.css'
 import App from './App.svelte'
+import { loadModels } from "./models.js";
+import { dcInit } from "dvijcock";
 
-const app = new App({
-  target: document.getElementById('app'),
-})
+async function load(){
+	await Promise.all([
+		dcInit(),
+		loadModels(),
+	]);
+	document.getElementById('initialLoading').remove();
+	new App({
+		target: document.getElementById('app'),
+	})
+}
+load();
 
-export default app

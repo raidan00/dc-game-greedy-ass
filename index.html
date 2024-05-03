@@ -1,13 +1,31 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="data:," />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greedy Ass</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" href="data:," />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Greedy Ass</title>
+		<style>
+			body {
+				margin: 0;
+			}
+			#initialLoading {
+				width: 100vw;
+				height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: min(15vw, 15vh);
+				font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="initialLoading">Loading...</div>
+		<script>
+			console.log("add dot change");
+		</script>
+		<div id="app"></div>
+		<script type="module" src="/src/main.js"></script>
+	</body>
 </html>
