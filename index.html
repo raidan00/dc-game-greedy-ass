@@ -29,7 +29,7 @@
 			{
 				let el = document.getElementById('initialLoading');
 				let dots = document.getElementById('loadingDots');
-				let dotNum = 0;
+				let dotNum = 1;
 				let interval = setInterval(()=>{
 					if(++dotNum >= 5)dotNum = 1;
 					dots.innerHTML = new Array(dotNum).join(".");
