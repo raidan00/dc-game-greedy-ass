@@ -180,6 +180,7 @@ export default class {
 		rigidBody.getMotionState().__destroy__();
 		rigidBody.getCollisionShape().__destroy__();
 		rigidBody.__destroy__();
+		if(objThree.dcData.btTriangleMesh)objThree.dcData.btTriangleMesh.__destroy__();
 	}
 	destroy(){
 		if(this.destroyed) return;

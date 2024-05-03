@@ -48,6 +48,7 @@ export default function(objThree){
 				mesh.addTriangle(ammoTmp.vecArr[0], ammoTmp.vecArr[1], ammoTmp.vecArr[2], false); 
 			}
 			objThree.dcData.btShape = new Ammo.btBvhTriangleMeshShape(mesh, true, true);
+			objThree.dcData.btTriangleMesh = mesh;
 		}
 	}
 	objThree.dcData.btShape.setMargin(0.05);
