@@ -8,7 +8,7 @@ async function load(){
 		dcInit(),
 		loadModels(),
 	]);
-	document.getElementById('initialLoading').remove();
+	onLoadFinished();
 	new App({
 		target: document.getElementById('app'),
 	})

@@ -21,9 +21,25 @@
 		</style>
 	</head>
 	<body>
-		<div id="initialLoading">Loading...</div>
+		<div id="initialLoading" style="">
+			<div>Loading</div>
+			<div id="loadingDots" style="width: 0px"></div>
+		</div>
 		<script>
-			console.log("add dot change");
+			{
+				let el = document.getElementById('initialLoading');
+				let dots = document.getElementById('loadingDots');
+				let dotNum = 0;
+				let interval = setInterval(()=>{
+					if(++dotNum >= 5)dotNum = 1;
+					dots.innerHTML = new Array(dotNum).join(".");
+				},800);
+				window.onLoadFinished = ()=>{
+					clearInterval(interval);
+					delete window.onLoadFinished
+					el.remove()
+				}
+			}
 		</script>
 		<div id="app"></div>
 		<script type="module" src="/src/main.js"></script>
