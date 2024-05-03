@@ -17,7 +17,7 @@ export default class{
 		dcWorld.scene.add(dcWorld.camera);
 		dcWorld.scene.add(dc.defaultLights);
 
-		dcWorld.add(models.test.scene);
+		dcWorld.add(models.test.scene.clone());
 
 		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
 		player.position.set(0,10,0);
