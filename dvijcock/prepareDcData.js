@@ -17,7 +17,7 @@ export default function(objThree){
 		if(!objThree.dcData)objThree.dcData={};
 		objThree.dcData.mass = objThree.userData.mass;
 
-		if(objThree.name.includes("Sphere")){
+		if(objThree.name.includes("Sphere") || objThree.name.includes("Icosphere")){
 			objThree.dcData.btShape = new Ammo.btSphereShape(objThree.scale.x);
 		}else if(objThree.name.includes("Cube")){
 			objThree.dcData.btShape = new Ammo.btBoxShape(
