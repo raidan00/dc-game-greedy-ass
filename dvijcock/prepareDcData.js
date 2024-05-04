@@ -23,6 +23,10 @@ export default function(objThree){
 			objThree.dcData.btShape = new Ammo.btBoxShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
 			);
+		}else if(objThree.name.includes("Cylinder")){
+			objThree.dcData.btShape = new Ammo.btCylinderShape(
+				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
+			);
 		}else{
 			objThree.dcData.btShape = true
 		}
