@@ -22,7 +22,7 @@ export default class{
 		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
 		player.position.set(0,10,0);
 		player.dcData = {
-			btShape: true,
+			physicsShape: true,
 			mass: 1,
 		}
 		dcWorld.add(player);

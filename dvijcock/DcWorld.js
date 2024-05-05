@@ -3,7 +3,7 @@ import renderer from "dvijcock/single/renderer.js"
 import Resizer from "dvijcock/Resizer.js"
 import ammoTmp from 'dvijcock/ammoTmp.js';
 import config from "dvijcock/config.js";
-import prepareDcData from "dvijcock/prepareDcData.js";
+import btShapeCreate from "dvijcock/btShapeCreate.js";
 
 export default class {
 	constructor(){ 
@@ -47,7 +47,6 @@ export default class {
 		);
 	}
 	addObjToPhysicsWorld(objThree){
-		prepareDcData(objThree);
 		let pos = new t.Vector3();
 		objThree.getWorldPosition(pos);
 		let quat = new t.Quaternion();
@@ -57,6 +56,8 @@ export default class {
 		transform.setRotation(ammoTmp.quat(quat.x, quat.y, quat.z, quat.w));
 		let motionState = new Ammo.btDefaultMotionState(transform);
 		let localInertia = ammoTmp.vec(0, 0, 0);
+
+		objThree.dcData.btShape.setMargin(objThree.dcData.setMargin || config.setMargin);
 		objThree.dcData.btShape.calculateLocalInertia(objThree.dcData.mass ?? 0, localInertia);
 		let rbInfo = new Ammo.btRigidBodyConstructionInfo(
 			objThree.dcData.mass ?? 0, motionState, objThree.dcData.btShape, localInertia
@@ -79,7 +80,10 @@ export default class {
 	add(objThree){
 		if(!objThree.parent)this.scene.add(objThree);
 		let addRecursion =(objThree)=>{
-			if(objThree?.dcData?.btShape || objThree?.userData?.btShape){
+			if(objThree?.dcData?.btShape){
+				this.addObjToPhysicsWorld(objThree)
+			}else if(objThree?.dcData?.physicsShape || objThree?.userData?.physicsShape){
+				btShapeCreate(objThree);
 				this.addObjToPhysicsWorld(objThree)
 			}else if(objThree?.children?.length){
 				for(let i=0; i<objThree.children.length; i++){
