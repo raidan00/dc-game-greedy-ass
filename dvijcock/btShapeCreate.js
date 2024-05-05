@@ -1,21 +1,20 @@
 import ammoTmp from 'dvijcock/ammoTmp.js';
 
 export default function(objThree){
-	if(objThree?.dcData?.physicsShape){
-		let physicsShape = objThree.dcData.physicsShape;
-		if(physicsShape == "Sphere" || (physicsShape === true && objThree.geometry.type === 'SphereGeometry')){
+	if(objThree?.dcData?.physicsShape === true){
+		if(objThree.geometry.type === 'SphereGeometry'){
 			objThree.dcData.btShape = new Ammo.btSphereShape(objThree.scale.x);
-		}else if(physicsShape == "Box" || (physicsShape === true && objThree.geometry.type === 'BoxGeometry')){
+		}else if(objThree.geometry.type === 'BoxGeometry'){
 			objThree.dcData.btShape = new Ammo.btBoxShape(
 				ammoTmp.vec(objThree.scale.x*0.5, objThree.scale.y*0.5, objThree.scale.z*0.5)
 			);
-		}else if(physicsShape == "Cylinder" || (physicsShape === true && objThree.geometry.type === 'CylinderGeometry')){
+		}else if(objThree.geometry.type === 'CylinderGeometry'){
 			objThree.dcData.btShape = new Ammo.btCylinderShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y*0.5, objThree.scale.z)
 			);
-		}else if(physicsShape == "Capsule" || (physicsShape === true && objThree.geometry.type === 'CapsuleGeometry')){
-			console.log("three", objThree);
-			objThree.dcData.btShape = new Ammo.btCapsuleShape(objThree.scale.x, objThree.scale.y);
+		}else if(objThree.geometry.type === 'CapsuleGeometry'){
+			objThree.dcData.btShape = new Ammo.btCapsuleShape(objThree.geometry.parameters.radius,
+				objThree.geometry.parameters.length);
 		}else{
 			console.error("Dvijcock error: uncnown physicsShape in dcData")
 		}
@@ -36,9 +35,11 @@ export default function(objThree){
 			objThree.dcData.btShape = new Ammo.btCylinderShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
 			);
-		}else if(physicsShape == "Capsule"){
-			console.log("blender", objThree);
-			objThree.dcData.btShape = new Ammo.btCapsuleShape(objThree.scale.x, objThree.scale.y);
+		}else if(typeof physicsShape == "string" && physicsShape.includes("Capsule")){
+			let regResult = physicsShape.match(/Capsule ([0-9\,]+) ([0-9\,]+)/);
+			if(!regResult)console.error("Dvijcock error: wrong Capsule shape fromat");
+			let [ ,redius, height] = regResult;
+			objThree.dcData.btShape = new Ammo.btCapsuleShape(redius, height);
 		}else if(physicsShape == "ConvexHull" || (physicsShape === true && objThree.dcData.mass)){
 			let vert = objThree.geometry.attributes.position.array;
 			const shape = new Ammo.btConvexHullShape();

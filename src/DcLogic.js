@@ -31,6 +31,8 @@ export default class{
 		}
 		dcWorld.add(men);
 
+		men.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
+
 
 		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
 		player.position.set(0,10,0);
