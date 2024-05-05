@@ -19,6 +19,19 @@ export default class{
 
 		dcWorld.add(models.ass.scene.clone());
 
+		let men1 = models.men.scene.clone();
+		men1.position.set(5,10,0);
+		dcWorld.add(men1);
+
+		const men = new t.Mesh( new t.CapsuleGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
+		men.position.set(5,10,0);
+		men.dcData = {
+			physicsShape: true,
+			mass: 0.1,
+		}
+		dcWorld.add(men);
+
+
 		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
 		player.position.set(0,10,0);
 		player.dcData = {

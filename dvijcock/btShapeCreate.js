@@ -13,8 +13,11 @@ export default function(objThree){
 			objThree.dcData.btShape = new Ammo.btCylinderShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y*0.5, objThree.scale.z)
 			);
+		}else if(physicsShape == "Capsule" || (physicsShape === true && objThree.geometry.type === 'CapsuleGeometry')){
+			console.log("three", objThree);
+			objThree.dcData.btShape = new Ammo.btCapsuleShape(objThree.scale.x, objThree.scale.y);
 		}else{
-			console.warn("uncnown objThree.dcData.physicsShape")
+			console.error("Dvijcock error: uncnown physicsShape in dcData")
 		}
 	}else if(objThree.userData.physicsShape){
 		let physicsShape = objThree.userData.physicsShape;
@@ -33,6 +36,9 @@ export default function(objThree){
 			objThree.dcData.btShape = new Ammo.btCylinderShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
 			);
+		}else if(physicsShape == "Capsule"){
+			console.log("blender", objThree);
+			objThree.dcData.btShape = new Ammo.btCapsuleShape(objThree.scale.x, objThree.scale.y);
 		}else if(physicsShape == "ConvexHull" || (physicsShape === true && objThree.dcData.mass)){
 			let vert = objThree.geometry.attributes.position.array;
 			const shape = new Ammo.btConvexHullShape();
@@ -55,7 +61,7 @@ export default function(objThree){
 			objThree.dcData.btShape = new Ammo.btBvhTriangleMeshShape(mesh, true, true);
 			objThree.dcData.btTriangleMesh = mesh;
 		}else{
-			console.warn("uncnown objThree.userData.physicsShape")
+			console.error("Dvijcock error: uncnown physicsShape in userData")
 		}
 	}
 }
