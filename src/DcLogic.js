@@ -8,16 +8,14 @@ export default class{
 	init(){
 		let dcWorld = this.dcWorld;
 
-		dcWorld.camera = new t.PerspectiveCamera( 65, 1/*dc will set acpect*/, 0.1, 30000 );
-		dcWorld.camera.position.set(20,7,0);
-
+		dcWorld.camera = models.howToPlay.cameras[0].clone();
 		this.controls = new OrbitControls(dcWorld.camera, dcWorld.renderer.domElement);
 		this.controls.enablePan = false;
 
 		dcWorld.scene.add(dcWorld.camera);
 		dcWorld.scene.add(dc.defaultLights);
 
-		dcWorld.add(models.ass.scene.clone());
+		dcWorld.add(models.howToPlay.scene.clone());
 
 		let men1 = models.men.scene.clone();
 		men1.position.set(5,10,0);
