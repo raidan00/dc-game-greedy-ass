@@ -16,11 +16,14 @@ export default class{
 		dcWorld.scene.add(dc.defaultLights);
 
 		dcWorld.add(models.howToPlay.scene.clone());
+		console.log(models.howToPlay);
 
-		let men1 = models.men.scene.clone();
-		men1.position.set(5,10,0);
-		dcWorld.add(men1);
+		let human = models.human.scene.children[0].clone();
+		human.position.set(5,10,0);
+		dcWorld.add(human);
+		human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 
+		/*
 		const men = new t.Mesh( new t.CapsuleGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
 		men.position.set(5,10,0);
 		men.dcData = {
@@ -28,8 +31,7 @@ export default class{
 			mass: 0.1,
 		}
 		dcWorld.add(men);
-
-		men.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
+		*/
 
 
 		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
