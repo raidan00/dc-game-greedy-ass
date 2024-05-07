@@ -15,13 +15,17 @@ export default class{
 		dcWorld.scene.add(dcWorld.camera);
 		dcWorld.scene.add(dc.defaultLights);
 
-		dcWorld.add(models.howToPlay.scene.clone());
-		console.log(models.howToPlay);
+		let wordScene = models.howToPlay.scene.clone();
+		dcWorld.add(wordScene);
+		let humans = wordScene.getObjectsByUserDataProperty("HumanPlace", true);
+		humans.forEach((objT)=>{
+			objT.removeFromParent();
+			let human = models.human.scene.children[0].clone();
+			human.position.copy(objT.position);
+			dcWorld.add(human);
+			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
+		})
 
-		let human = models.human.scene.children[0].clone();
-		human.position.set(5,10,0);
-		dcWorld.add(human);
-		human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 
 		/*
 		const men = new t.Mesh( new t.CapsuleGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
