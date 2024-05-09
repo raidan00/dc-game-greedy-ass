@@ -23,7 +23,8 @@ export default class{
 			let human = models.human.scene.children[0].clone();
 			human.position.copy(objT.position);
 			dcWorld.add(human);
-			//human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
+			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
+			human.dcData.type = "human";
 		})
 
 		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
@@ -34,8 +35,29 @@ export default class{
 		}
 		dcWorld.add(player);
 		this.moveController = new dc.MoveController(player, this.controls, 0.5, 4);
+
+		function setActiveHuman(obj){
+			console.log(obj);
+		}
+		const raycaster = new t.Raycaster();
+		const pointer = new t.Vector2();
+		this.onClick = function (event){
+			pointer.x = (event.clientX / window.innerWidth)*2-1;
+			pointer.y = - (event.clientY / window.innerHeight)*2+1;
+			raycaster.setFromCamera(pointer, dcWorld.camera);
+			const intersects = raycaster.intersectObjects(dcWorld.scene.children);
+			for (let i = 0; i < intersects.length; i ++){
+				let obj = intersects[i].object;
+				if(obj?.parent?.dcData?.type == "human"){
+					setActiveHuman(obj.parent);
+					return;
+				}
+			}
+		}
+		window.addEventListener('click', this.onClick);
 	}
 	destroy(){
 		this.controls.dispose();
+		window.removeEventListener('click', this.onClick);
 	}
 }
