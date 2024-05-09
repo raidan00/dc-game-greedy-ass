@@ -36,10 +36,11 @@ export default function(objThree){
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
 			);
 		}else if(typeof physicsShape == "string" && physicsShape.includes("Capsule")){
-			let regResult = physicsShape.match(/Capsule ([0-9\,]+) ([0-9\,]+)/);
+			let regResult = physicsShape.match(/Capsule ([0-9\.]+) ([0-9\.]+)/);
 			if(!regResult)console.error("Dvijcock error: wrong Capsule shape fromat");
-			let [ ,redius, height] = regResult;
-			objThree.dcData.btShape = new Ammo.btCapsuleShape(redius, height);
+			let radius = parseFloat(regResult[1])
+			let height = parseFloat(regResult[2]) - radius*2;
+			objThree.dcData.btShape = new Ammo.btCapsuleShape(radius, height);
 		}else if(physicsShape == "ConvexHull" || (physicsShape === true && objThree.dcData.mass)){
 			let vert = objThree.geometry.attributes.position.array;
 			const shape = new Ammo.btConvexHullShape();
