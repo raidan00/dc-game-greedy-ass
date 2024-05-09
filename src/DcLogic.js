@@ -15,7 +15,6 @@ export default class{
 		dcWorld.scene.add(dcWorld.camera);
 		dcWorld.scene.add(dc.defaultLights);
 
-		console.log(models.human.scene.children[0])
 		let wordScene = models.howToPlay.scene.clone();
 		dcWorld.add(wordScene);
 		let humans = wordScene.getObjectsByUserDataProperty("HumanPlace", true);
