@@ -8,7 +8,7 @@
 
 <div class="main">
 	<div class="text">
-		Greedy ass pulling out all money from people. You need to stop this.
+		Greedy ass pulling out all money from people. You must stop this.
 	</div>
 	<div class="levels">
 		levels:

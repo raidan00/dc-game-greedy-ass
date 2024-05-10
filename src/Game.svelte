@@ -3,6 +3,7 @@
 	import {  DcWorld } from "dvijcock";
 	import DcLogic from "./DcLogic.js";
 	import Back from './Back.svelte';
+	import ActivateSkills from './ActivateSkills.svelte';
 
 	let domEl;
 	let dc;
@@ -18,6 +19,7 @@
 
 <div bind:this={domEl} class="game"></div>
 <Back/>
+<ActivateSkills/>
 
 <style>
 	.game {

@@ -37,8 +37,8 @@ export default class{
 		let setActiveHuman = (obj)=>{
 			if(this.arrowAndInfrom){
 				this.arrowAndInfrom.destroy();
-				this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step2\n Move close to greedy ass but do not touch it and activate anti-capitalism community skill`,
-					models.arrow.scene, humans[0], humans[0], 6);
+				let str = `Step2\n Move close to greedy ass but do not touch it and activate anti-capitalism skill`
+				this.arrowAndInfrom = new dc.ArrowAndInfrom(str, models.arrow.scene, humans[0], wordScene, 6);
 			}
 			if(this.moveController)this.moveController.destroy();
 			this.moveController = new dc.MoveController(obj, this.controls, 0.5, 4);
