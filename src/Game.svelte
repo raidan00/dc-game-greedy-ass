@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from "svelte";
 	import {  DcWorld } from "dvijcock";
 	import DcLogic from "./DcLogic.js";
+	import Back from './Back.svelte';
 
 	let domEl;
 	let dc;
@@ -16,6 +17,7 @@
 </script>
 
 <div bind:this={domEl} class="game"></div>
+<Back/>
 
 <style>
 	.game {

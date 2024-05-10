@@ -16,5 +16,6 @@
 		top: 0px;
 		left: 0px;
 		position: fixed;
+		border-radius: 0px 0px 8px 0px;
 	}
 </style>
