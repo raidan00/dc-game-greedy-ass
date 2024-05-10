@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const route = writable("index");
+export const route = writable("howToPlay");
