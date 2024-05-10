@@ -28,6 +28,7 @@
 		border-radius: 5px;
 		color: black;
 		margin-top: 11vw;
+		white-space: break-spaces;
 	}
 </style>
 

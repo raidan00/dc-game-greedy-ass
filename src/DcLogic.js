@@ -1,11 +1,14 @@
+import {get as storeGet} from 'svelte/store';
 import * as t from "three"
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as dc from 'dvijcock';
+import { route as routeStore } from './store.js';
 import models from "./models.js";
 
 export default class{
 	constructor(){}
 	init(){
+		let route = storeGet(routeStore);
 		let dcWorld = this.dcWorld;
 
 		dcWorld.camera = models.howToPlay.cameras[0].clone();
@@ -18,26 +21,27 @@ export default class{
 		let wordScene = models.howToPlay.scene.clone();
 		dcWorld.add(wordScene);
 		let humans = wordScene.getObjectsByUserDataProperty("HumanPlace", true);
-		humans.forEach((objT)=>{
-			objT.removeFromParent();
+		humans = humans.map((objPlace)=>{
+			objPlace.removeFromParent();
 			let human = models.human.scene.children[0].clone();
-			human.position.copy(objT.position);
+			human.position.copy(objPlace.position);
 			dcWorld.add(human);
 			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 			human.dcData.type = "human";
+			return human;
 		})
-
-		const player = new t.Mesh( new t.SphereGeometry(), new t.MeshStandardMaterial({color: "grey"}) );
-		player.position.set(0,10,0);
-		player.dcData = {
-			physicsShape: true,
-			mass: 1,
-		}
-		dcWorld.add(player);
-		this.moveController = new dc.MoveController(player, this.controls, 0.5, 4);
-
-		function setActiveHuman(obj){
-			console.log(obj);
+		if(route == "howToPlay"){
+			this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step1\n Click on human to take control`,
+				models.arrow.scene, humans[0], humans[0], 6);
+		};
+		let setActiveHuman = (obj)=>{
+			if(this.arrowAndInfrom){
+				this.arrowAndInfrom.destroy();
+				this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step2\n Move close to greedy ass but do not touch it and activate anti-capitalism community skill`,
+					models.arrow.scene, humans[0], humans[0], 6);
+			}
+			if(this.moveController)this.moveController.destroy();
+			this.moveController = new dc.MoveController(obj, this.controls, 0.5, 4);
 		}
 		const raycaster = new t.Raycaster();
 		const pointer = new t.Vector2();
@@ -59,5 +63,7 @@ export default class{
 	destroy(){
 		this.controls.dispose();
 		window.removeEventListener('click', this.onClick);
+		if(this.arrowAndInfrom)this.arrowAndInfrom.destroy();
+		if(this.moveController)this.moveController.destroy();
 	}
 }

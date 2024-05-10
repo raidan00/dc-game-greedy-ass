@@ -1,8 +1,8 @@
-import ArrowHelper from './ArrowHelper.svelte'
+import ArrowAndInfrom from './ArrowAndInfrom.svelte'
 
 export default class {
 	constructor(text, model, from, to, height){ 
-		let arrow = model.clone();
+		let arrow = model;
 		arrow.dcData = {
 			tickAfterPhysics(delta){
 				arrow.position.set(from.position.x, height, from.position.z)
@@ -10,11 +10,12 @@ export default class {
 			}
 		}
 		from.parent.add(arrow);
+		this.arrow = arrow;
 
 		this.div = document.createElement('div');
-		this.div.className = 'dvijcock-arrow-helper';
+		this.div.className = 'dvijcock-arrow-and-infrom';
 		document.body.appendChild(this.div);
-		this.app = new ArrowHelper({
+		this.app = new ArrowAndInfrom({
 			target: this.div,
 			props: {
 				text
@@ -24,5 +25,6 @@ export default class {
 	destroy(){
 		this.app.$destroy();
 		this.div.remove();
+		this.arrow.removeFromParent();
 	}
 }
