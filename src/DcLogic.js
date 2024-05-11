@@ -10,7 +10,6 @@ import { skill1Button, skill2Button } from './ActivateSkills.svelte';
 export default class{
 	constructor(){}
 	init(){
-		console.log(skill1Button);
 		let route = storeGet(routeStore);
 		let dcWorld = this.dcWorld;
 
@@ -76,6 +75,12 @@ export default class{
 			}
 		}
 		window.addEventListener('click', this.onClick);
+		skill1Button.addEventListener('click', ()=>{
+			if(!activeHuman)return;
+			let sign = models.sign.scene.clone();
+			sign.position.set(activeHuman.position.x, 0, activeHuman.position.z);
+			dcWorld.scene.add(sign);
+		});
 	}
 	destroy(){
 		this.controls.dispose();
