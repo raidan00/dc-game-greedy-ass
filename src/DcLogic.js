@@ -4,10 +4,13 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as dc from 'dvijcock';
 import { route as routeStore } from './store.js';
 import models from "./models.js";
+import { skill1Button, skill2Button } from './ActivateSkills.svelte';
+
 
 export default class{
 	constructor(){}
 	init(){
+		console.log(skill1Button);
 		let route = storeGet(routeStore);
 		let dcWorld = this.dcWorld;
 
@@ -34,6 +37,19 @@ export default class{
 			this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step1\n Click on human to take control`,
 				models.arrow.scene, humans[0], humans[0], 6);
 		};
+		let activeHuman;
+		let target = models.target.scene.clone();
+		target.scale.set(1.5, 1.5, 1.5);
+		target.dcData = {
+			tickAfterPhysics(delta){
+				if(activeHuman){
+					target.position.set(activeHuman.position.x, activeHuman.position.y-1.1, activeHuman.position.z);
+					target.rotation.y = (Date.now()-this.start)*0.001;
+				}
+			},
+			start: Date.now(),
+		}
+		dcWorld.scene.add(target);
 		let setActiveHuman = (obj)=>{
 			if(this.arrowAndInfrom){
 				this.arrowAndInfrom.destroy();
@@ -42,6 +58,7 @@ export default class{
 			}
 			if(this.moveController)this.moveController.destroy();
 			this.moveController = new dc.MoveController(obj, this.controls, 0.5, 4);
+			activeHuman = obj;
 		}
 		const raycaster = new t.Raycaster();
 		const pointer = new t.Vector2();
