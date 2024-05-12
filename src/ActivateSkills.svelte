@@ -2,6 +2,20 @@
 	export let skill1Button;
 	export let skill2Button;
 </script>
+<script>
+	import { onMount, onDestroy } from "svelte";
+	import g from "./global.js";
+	import models from "./models.js";
+
+	onMount(() => {
+		skill1Button.addEventListener('click', ()=>{
+			if(!g.activeHuman)return;
+			let sign = models.sign.scene.clone();
+			sign.position.set(g.activeHuman.position.x, 0, g.activeHuman.position.z);
+			g.dcWorld.scene.add(sign);
+		});
+	});
+</script>
 
 <button class="skill1" bind:this={skill1Button}>anti capitalism</button>
 <button class="skill2" bind:this={skill2Button}>communism on borders</button>

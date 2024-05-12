@@ -5,13 +5,15 @@ import * as dc from 'dvijcock';
 import { route as routeStore } from './store.js';
 import models from "./models.js";
 import { skill1Button, skill2Button } from './ActivateSkills.svelte';
+import g from "./global.js";
 
 
 export default class{
 	constructor(){}
 	init(){
 		let route = storeGet(routeStore);
-		let dcWorld = this.dcWorld;
+		let dcWorld = g.dcWorld = this.dcWorld;
+		g.dcLogic = this;
 
 		dcWorld.camera = models.howToPlay.cameras[0].clone();
 		this.controls = new OrbitControls(dcWorld.camera, dcWorld.renderer.domElement);
@@ -36,13 +38,12 @@ export default class{
 			this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step1\n Click on human to take control`,
 				models.arrow.scene, humans[0], humans[0], 6);
 		};
-		let activeHuman;
 		let target = models.target.scene.clone();
 		target.scale.set(1.5, 1.5, 1.5);
 		target.dcData = {
 			tickAfterPhysics(delta){
-				if(activeHuman){
-					target.position.set(activeHuman.position.x, activeHuman.position.y-1.1, activeHuman.position.z);
+				if(g.activeHuman){
+					target.position.set(g.activeHuman.position.x, g.activeHuman.position.y-1.1, g.activeHuman.position.z);
 					target.rotation.y = (Date.now()-this.start)*0.001;
 				}
 			},
@@ -57,7 +58,7 @@ export default class{
 			}
 			if(this.moveController)this.moveController.destroy();
 			this.moveController = new dc.MoveController(obj, this.controls, 0.5, 4);
-			activeHuman = obj;
+			g.activeHuman = obj;
 		}
 		const raycaster = new t.Raycaster();
 		const pointer = new t.Vector2();
@@ -75,14 +76,9 @@ export default class{
 			}
 		}
 		window.addEventListener('click', this.onClick);
-		skill1Button.addEventListener('click', ()=>{
-			if(!activeHuman)return;
-			let sign = models.sign.scene.clone();
-			sign.position.set(activeHuman.position.x, 0, activeHuman.position.z);
-			dcWorld.scene.add(sign);
-		});
 	}
 	destroy(){
+		g.wipe();
 		this.controls.dispose();
 		window.removeEventListener('click', this.onClick);
 		if(this.arrowAndInfrom)this.arrowAndInfrom.destroy();
