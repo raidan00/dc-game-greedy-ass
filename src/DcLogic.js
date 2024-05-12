@@ -4,7 +4,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as dc from 'dvijcock';
 import { route as routeStore } from './store.js';
 import models from "./models.js";
-import { skill1Button, skill2Button } from './ActivateSkills.svelte';
 import g from "./global.js";
 
 
