@@ -7,6 +7,13 @@
 		let sign = models.sign.scene.clone();
 		sign.position.set(g.activeHuman.position.x, 0, g.activeHuman.position.z);
 		g.dcWorld.scene.add(sign);
+		sign.dcData = {
+			tickAfterPhysics(delta){
+				let money = models.money.scene.clone();
+				money.position.set(g.activeHuman.position.x, 10, g.activeHuman.position.z);
+				g.dcWorld.add(money);
+			}
+		}
 	}
 	function communism(){
 	}
