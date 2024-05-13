@@ -7,8 +7,10 @@
 		let sign = models.sign.scene.clone();
 		sign.position.set(g.activeHuman.position.x, 0, g.activeHuman.position.z);
 		g.dcWorld.scene.add(sign);
+		let num = 0;
 		sign.dcData = {
 			tickAfterPhysics(delta){
+				if(num>100)return;
 				let money = models.money.scene.clone();
 				money.position.set(g.activeHuman.position.x, 10, g.activeHuman.position.z);
 				g.dcWorld.add(money);
@@ -31,7 +33,7 @@
 
 <button class="skill1" on:click={antiCapitalism}>anti capitalism</button>
 <button class="skill2" on:click={communism}>communism on borders</button>
-<svelte:window on:keydown|preventDefault={onKeyDown}/>
+<svelte:window on:keydown={onKeyDown}/>
 
 <style>
 	.skill1 {
