@@ -10,7 +10,7 @@
 		let num = 0;
 		sign.dcData = {
 			tickAfterPhysics(delta){
-				if(num>100)return;
+				if(++num>100)return;
 				let money = models.money.scene.clone();
 				money.position.set(g.activeHuman.position.x, 10, g.activeHuman.position.z);
 				g.dcWorld.add(money);

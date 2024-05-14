@@ -1,6 +1,7 @@
 <script>
 	import { onMount, onDestroy } from "svelte";
 	import { lvl, power, influence, winLooseMsg } from "./store.js";
+	import g from "./global.js";
 
 	let powers = [5, 10, 20, 25, 30, 32, 34, 36, 38, 40];
 	let powerI = 0;
@@ -36,17 +37,21 @@
 
 {#if show && !$winLooseMsg && $lvl != -0}
 	<div class="main">
-		<div>
-			<div>Power</div>
-			<div>Voters moving to vote box until he in your power ring</div>
+		<div class="card">
+			<div>Cost of anti-capitalist society creation</div>
 			<button on:click={()=>{ $power = getNextPower(); show=false; powerI++;} }>
 				Upgrade to {getNextPower().toFixed(2)}
 			</button>
 
 		</div>
-		<div>
-			<div>Influence</div>
-			<div>Random voter move to vote box until he vote</div>
+		<div class="card">
+			<div>Communism on border cooldown</div>
+			<button on:click={()=>{ $influence = getNextInfluence(); show=false; influenceI++;} }>
+				Upgrade to {getNextInfluence().toFixed(2)}
+			</button>
+		</div>
+		<div class="card">
+			<div>Humans education</div>
 			<button on:click={()=>{ $influence = getNextInfluence(); show=false; influenceI++;} }>
 				Upgrade to {getNextInfluence().toFixed(2)}
 			</button>
@@ -75,9 +80,24 @@
 		border-radius: 5px;
 		pointer-events: all;
 	}
+	.card {
+		min-height: 200px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+	}
+	.card > div{
+		padding: 10px;
+	}
 	.main > div div:first-child{
-		background: white;
+		background: #4c4580;
 		border-radius: 3px;
-		font-size: 24px;
+		font-size: 17px;
+		min-height: 100px;
+		align-content: center;
+		flex-direction: column;
+		justify-content: center;
+		display: flex;
+		vertical-align: middle;
 	}
 </style>
