@@ -1,8 +1,27 @@
 <script>
 	import { onMount, onDestroy } from "svelte";
-	import { lvl, power, influence, winLooseMsg } from "./store.js";
+	import { power, influence, winLooseMsg } from "./store.js";
 	import g from "./global.js";
+	import Card from "./Card.svelte";
 
+
+	let config = [
+		{
+			name: "antiCapitalismPrice",
+			text: "Cost of anti-capitalism society creation",
+			arr: [100, 80, 60, 40, 20, 10],
+		},
+		{
+			name: "communismCooldown",
+			text: "Communism on border cooldown",
+			arr: [10000, 8000, 6000, 4000, 3000, 2000],
+		},
+		{
+			name: "education",
+			text: "Humans education",
+			arr: [0.1, 0.2, 0.4, 0.6, 0.8, 1],
+		},
+	]
 	let powers = [5, 10, 20, 25, 30, 32, 34, 36, 38, 40];
 	let powerI = 0;
 	function getNextPower(){
@@ -19,26 +38,24 @@
 	$influence = influences[0];
 	let show = true;
 	let interval;
-	let blur = function(event){
-		show = true;
-	};
 	onMount(async() => {
 		interval = setInterval(()=>{
 			show = true;
 		}, 15000)
-		window.addEventListener("blur", blur);
 	});
 	onDestroy(() => {
 		clearInterval(interval);
-		window.removeEventListener("blur", blur);
 	});
 </script>
 
 
-{#if show && !$winLooseMsg && $lvl != -0}
+{#if show && !$winLooseMsg}
 	<div class="main">
+		{#each config as el, i}
+			<Card config={el}/>
+		{/each}
 		<div class="card">
-			<div>Cost of anti-capitalist society creation</div>
+			<div>Cost of anti-capitalism society creation</div>
 			<button on:click={()=>{ $power = getNextPower(); show=false; powerI++;} }>
 				Upgrade to {getNextPower().toFixed(2)}
 			</button>
@@ -71,33 +88,5 @@
 		align-items: center;
 		justify-content: center;
 		pointer-events: none;
-	}
-	.main > div{
-		background: grey;
-		width: 20vw;
-		padding: 10px;
-		margin: 10px;
-		border-radius: 5px;
-		pointer-events: all;
-	}
-	.card {
-		min-height: 200px;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-	.card > div{
-		padding: 10px;
-	}
-	.main > div div:first-child{
-		background: #4c4580;
-		border-radius: 3px;
-		font-size: 17px;
-		min-height: 100px;
-		align-content: center;
-		flex-direction: column;
-		justify-content: center;
-		display: flex;
-		vertical-align: middle;
 	}
 </style>
