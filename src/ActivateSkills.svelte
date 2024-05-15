@@ -1,19 +1,29 @@
 <script>
 	import g from "./global.js";
 	import models from "./models.js";
+	import * as t from "three"
+	import * as dc from 'dvijcock';
 
 	function antiCapitalism(){
 		if(!g.activeHuman)return;
 		let sign = models.sign.scene.clone();
 		sign.position.set(g.activeHuman.position.x, 0, g.activeHuman.position.z);
 		g.dcWorld.scene.add(sign);
-		let num = 0;
+		let coin;
 		sign.dcData = {
 			tickAfterPhysics(delta){
-				if(++num>100)return;
-				let money = models.money.scene.clone();
-				money.position.set(g.activeHuman.position.x, 10, g.activeHuman.position.z);
-				g.dcWorld.add(money);
+				if(coin){
+					let velocity = coin.dcData.rbody.getLinearVelocity();
+					let velVec = new t.Vector3(velocity.x(), velocity.y(), velocity.z());
+					if(velVec.length()>3)return;
+					let pushVec = sign.position.clone().sub(coin.position).normalize().multiplyScalar(1);
+					coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
+				}else{
+					coin = models.money.scene.children[0].clone();
+					coin.position.set(0, 2, 0);
+					g.dcWorld.add(coin);
+					g.assMoney--;
+				}
 			}
 		}
 	}
