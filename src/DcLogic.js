@@ -6,13 +6,13 @@ import { route as routeStore } from './store.js';
 import models from "./models.js";
 import g from "./global.js";
 
-
 export default class{
 	constructor(){}
 	init(){
 		let route = storeGet(routeStore);
 		let dcWorld = g.dcWorld = this.dcWorld;
 		g.dcLogic = this;
+		g.assMoney = 1;
 
 		dcWorld.camera = models.howToPlay.cameras[0].clone();
 		this.controls = new OrbitControls(dcWorld.camera, dcWorld.renderer.domElement);
@@ -31,6 +31,7 @@ export default class{
 			dcWorld.add(human);
 			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 			human.dcData.type = "human";
+			human.dcData.money = 1000;
 			return human;
 		})
 		if(route == "howToPlay"){

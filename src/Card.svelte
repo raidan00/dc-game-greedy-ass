@@ -19,7 +19,7 @@
 	<div class="card">
 		<div class="text">{el.text}</div>
 		<button on:click={setNext}>
-			Upgrade to {el.formater(getNext())}
+			Upgrade to <div>{el.formater(getNext())}</div>
 		</button>
 	</div>
 {/if}

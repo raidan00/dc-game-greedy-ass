@@ -35,7 +35,7 @@
 		show = false;
 		setTimeout(()=>{
 			show = true;
-		},500)
+		},50000)
 	}
 	hide();
 </script>

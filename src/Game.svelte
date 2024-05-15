@@ -5,6 +5,7 @@
 	import Back from './Back.svelte';
 	import ActivateSkills from './ActivateSkills.svelte';
 	import Upgrades from './Upgrades.svelte';
+	import Inform from './Inform.svelte';
 
 	let domEl;
 	let dc;
@@ -22,6 +23,7 @@
 <Back/>
 <ActivateSkills/>
 <Upgrades/>
+<Inform/>
 
 <style>
 	.game {
