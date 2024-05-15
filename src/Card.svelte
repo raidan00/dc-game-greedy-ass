@@ -1,13 +1,28 @@
 <script>
-	export let config;
+	import g from "./global.js";
+
+	export let el;
+	export let hide;
+
+	function getNext(){
+		if(el.i>el.arr.length-2)el.i = el.arr.length-2;
+		return el.arr[el.i+1];
+	}
+	function setNext(){
+		el.i++;
+		hide();
+		g[el.name] = el.arr[el.i];
+	}
 </script>
 
-<div class="card">
-	<div class="text">{config.text}</div>
-	<button>
-		Upgrade to 1
-	</button>
-</div>
+{#if el.i!=el.arr.length-1}
+	<div class="card">
+		<div class="text">{el.text}</div>
+		<button on:click={setNext}>
+			Upgrade to {el.formater(getNext())}
+		</button>
+	</div>
+{/if}
 <style>
 	.card{
 		background: grey;
