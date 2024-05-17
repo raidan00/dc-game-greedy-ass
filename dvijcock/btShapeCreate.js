@@ -20,9 +20,8 @@ export default function(objThree){
 		}
 	}else if(objThree.userData.physicsShape){
 		let physicsShape = objThree.userData.physicsShape;
-		if(!objThree.dcData){
-			objThree.dcData={ mass: objThree.userData.mass };
-		}
+		if(!objThree.dcData)objThree.dcData={};
+		if(!objThree.dcData.mass)objThree.dcData.mass = objThree.userData.mass;
 		if(physicsShape === true && (objThree.name.includes("Sphere") || objThree.name.includes("Icosphere"))){
 			objThree.dcData.btShape = new Ammo.btSphereShape(objThree.scale.x);
 		}else if(physicsShape === true && objThree.name.includes("Cube")){
