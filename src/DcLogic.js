@@ -9,6 +9,7 @@ import g from "./global.js";
 export default class{
 	constructor(){}
 	init(){
+		dc.config.collisionFilter = 0b01;
 		let route = storeGet(routeStore);
 		let dcWorld = g.dcWorld = this.dcWorld;
 		g.dcLogic = this;

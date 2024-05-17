@@ -76,8 +76,10 @@ export default class {
 		rbody.objThree = objThree;
 		objThree.dcData.rbody = rbody;
 		let collisionGroup = objThree.dcData.collisionGroup || objThree.dcData.collisionFilter
+			|| objThree.userData.collisionGroup || objThree.userData.collisionFilter
 			|| config.collisionGroup || config.collisionFilter || 0b111111111111111111111111;
 		let collisionMask = objThree.dcData.collisionMask || objThree.dcData.collisionFilter
+			|| objThree.userData.collisionMask || objThree.userData.collisionFilter
 			|| config.collisionMask || config.collisionFilter || 0b111111111111111111111111;
 		this.physicsWorld.addRigidBody(rbody, collisionGroup, collisionMask);
 	}
