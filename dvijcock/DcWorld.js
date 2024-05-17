@@ -75,7 +75,11 @@ export default class {
 		}
 		rbody.objThree = objThree;
 		objThree.dcData.rbody = rbody;
-		this.physicsWorld.addRigidBody(rbody);
+		let collisionGroup = objThree.dcData.collisionGroup || objThree.dcData.collisionFilter
+			|| config.collisionGroup || config.collisionFilter || 0b111111111111111111111111;
+		let collisionMask = objThree.dcData.collisionMask || objThree.dcData.collisionFilter
+			|| config.collisionMask || config.collisionFilter || 0b111111111111111111111111;
+		this.physicsWorld.addRigidBody(rbody, collisionGroup, collisionMask);
 	}
 	add(objThree){
 		if(!objThree.parent)this.scene.add(objThree);
