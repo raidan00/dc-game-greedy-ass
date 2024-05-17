@@ -20,7 +20,7 @@
 
 <div class="main">
 	<div>
-		Ass money: {assMoney}
+		Greedy ass money: {assMoney}
 	</div>
 	{#if activeHuman}
 		<div>

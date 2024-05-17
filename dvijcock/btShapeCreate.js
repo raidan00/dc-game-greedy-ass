@@ -23,22 +23,27 @@ export default function(objThree){
 		if(!objThree.dcData){
 			objThree.dcData={ mass: objThree.userData.mass };
 		}
-		if(physicsShape == "Sphere" || (
-		physicsShape === true && ( objThree.name.includes("Sphere") || objThree.name.includes("Icosphere") )
-		)){
+		if(physicsShape === true && (objThree.name.includes("Sphere") || objThree.name.includes("Icosphere"))){
 			objThree.dcData.btShape = new Ammo.btSphereShape(objThree.scale.x);
-		}else if(physicsShape == "Box" || (physicsShape === true && objThree.name.includes("Cube"))){
+		}else if(physicsShape === true && objThree.name.includes("Cube")){
 			objThree.dcData.btShape = new Ammo.btBoxShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
 			);
-		}else if(physicsShape == "Cylinder" || (physicsShape === true && objThree.name.includes("Cylinder"))){
+		}else if(physicsShape === true && objThree.name.includes("Cylinder")){
 			objThree.dcData.btShape = new Ammo.btCylinderShape(
 				ammoTmp.vec(objThree.scale.x, objThree.scale.y, objThree.scale.z)
 			);
+		}else if(typeof physicsShape == "string" && physicsShape.includes("Cylinder")){
+			let regResult = physicsShape.match(/Cylinder ([0-9\.]+) ([0-9\.]+) ([0-9\.]+)/);
+			if(!regResult)console.error("Dvijcock error: wrong Cylinder shape fromat");
+			let x = parseFloat(regResult[1]);
+			let y = parseFloat(regResult[2]);
+			let z = parseFloat(regResult[3]);
+			objThree.dcData.btShape = new Ammo.btCylinderShape(ammoTmp.vec(x, y, z));
 		}else if(typeof physicsShape == "string" && physicsShape.includes("Capsule")){
 			let regResult = physicsShape.match(/Capsule ([0-9\.]+) ([0-9\.]+)/);
 			if(!regResult)console.error("Dvijcock error: wrong Capsule shape fromat");
-			let radius = parseFloat(regResult[1])
+			let radius = parseFloat(regResult[1]);
 			let height = parseFloat(regResult[2]) - radius*2;
 			objThree.dcData.btShape = new Ammo.btCapsuleShape(radius, height);
 		}else if(physicsShape == "ConvexHull" || (physicsShape === true && objThree.dcData.mass)){

@@ -6,12 +6,12 @@
 
 	function antiCapitalism(){
 		if(!g.activeHuman)return;
-		let sign = models.sign.scene.clone();
-		sign.position.set(g.activeHuman.position.x, 0, g.activeHuman.position.z);
-		g.dcWorld.scene.add(sign);
+		let sign = models.sign.scene.children[0].clone();
+		sign.position.set(g.activeHuman.position.x, 2, g.activeHuman.position.z);
+		g.dcWorld.add(sign);
+		sign.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 		let coin;
-		sign.dcData = {
-			tickAfterPhysics(delta){
+		sign.dcData.tickAfterPhysics =(delta)=>{
 				if(coin){
 					let velocity = coin.dcData.rbody.getLinearVelocity();
 					let velVec = new t.Vector3(velocity.x(), velocity.y(), velocity.z());
@@ -25,7 +25,6 @@
 					g.assMoney--;
 				}
 			}
-		}
 	}
 	function communism(){
 	}
