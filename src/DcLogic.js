@@ -41,8 +41,7 @@ export default class{
 			let impulse2d = new t.Vector2(tObj.position.x, tObj.position.z).normalize();
 			let impulse = new t.Vector3(impulse2d.x, 1, impulse2d.y).multiplyScalar(0.5);
 			tObj.dcData.rbody.applyCentralImpulse(dc.ammoTmp.vec(impulse.x, impulse.y, impulse.z));
-		},
-		console.log(ass);
+		};
 		if(route == "howToPlay"){
 			this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step1\n Click on human to take control`,
 				models.arrow.scene, humans[0], humans[0], 6);
