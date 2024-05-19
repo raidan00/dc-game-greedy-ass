@@ -33,7 +33,7 @@ export default class{
 			dcWorld.add(human);
 			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 			human.dcData.type = "human";
-			human.dcData.money = 1000;
+			human.dcData.money = 10;
 			return human;
 		})
 		let ass = wordScene.getObjectByName("Ass");

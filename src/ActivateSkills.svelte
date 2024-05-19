@@ -6,6 +6,8 @@
 
 	function antiCapitalism(){
 		if(!g.activeHuman)return;
+		if(g.activeHuman.dcData.money-10 < 0)return;
+		g.activeHuman.dcData.money -= 10;
 		let sign = models.sign.scene.children[0].clone();
 		sign.position.set(g.activeHuman.position.x, 2, g.activeHuman.position.z);
 		g.dcWorld.add(sign);
@@ -25,7 +27,7 @@
 					g.assMoney--;
 					if(g.dcLogic.arrowAndInfrom){
 						g.dcLogic.arrowAndInfrom.destroy();
-						let str = `Step3\n pick up coin`
+						let str = `Step3\n Pick up coin`
 						g.dcLogic.arrowAndInfrom = new dc.ArrowAndInfrom(str, models.arrow.scene, g.activeHuman, coin, 6);
 					}
 				}
