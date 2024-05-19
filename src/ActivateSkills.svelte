@@ -23,6 +23,11 @@
 					coin.position.set(0, 2, 0);
 					g.dcWorld.add(coin);
 					g.assMoney--;
+					if(g.dcLogic.arrowAndInfrom){
+						g.dcLogic.arrowAndInfrom.destroy();
+						let str = `Step3\n pick up coin`
+						g.dcLogic.arrowAndInfrom = new dc.ArrowAndInfrom(str, models.arrow.scene, g.activeHuman, coin, 6);
+					}
 				}
 			}
 	}

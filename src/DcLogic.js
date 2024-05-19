@@ -14,7 +14,7 @@ export default class{
 		let route = storeGet(routeStore);
 		let dcWorld = g.dcWorld = this.dcWorld;
 		g.dcLogic = this;
-		g.assMoney = 1;
+		g.assMoney = 3;
 
 		dcWorld.camera = models.howToPlay.cameras[0].clone();
 		this.controls = new OrbitControls(dcWorld.camera, dcWorld.renderer.domElement);
