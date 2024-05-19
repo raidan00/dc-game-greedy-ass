@@ -6,6 +6,7 @@
 	import ActivateSkills from './ActivateSkills.svelte';
 	import Upgrades from './Upgrades.svelte';
 	import Inform from './Inform.svelte';
+	import WinMsg from './WinMsg.svelte';
 
 	let domEl;
 	let dc;
@@ -24,6 +25,7 @@
 <ActivateSkills/>
 <Upgrades/>
 <Inform/>
+<WinMsg/>
 
 <style>
 	.game {

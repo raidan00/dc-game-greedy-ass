@@ -5,6 +5,7 @@ import * as dc from 'dvijcock';
 import { route as routeStore } from './store.js';
 import models from "./models.js";
 import g from "./global.js";
+import { winMsg } from './WinMsg.svelte';
 
 export default class{
 	constructor(){}
@@ -85,6 +86,11 @@ export default class{
 			}
 		}
 		window.addEventListener('click', this.onClick);
+		this.resultInterval = setInterval(()=>{
+			if(g.assMoney < 1){
+				winMsg.set(true);
+			};
+		}, 300);
 	}
 	destroy(){
 		g.wipe();
@@ -92,5 +98,6 @@ export default class{
 		window.removeEventListener('click', this.onClick);
 		if(this.arrowAndInfrom)this.arrowAndInfrom.destroy();
 		if(this.moveController)this.moveController.destroy();
+		clearInterval(this.resultInterval);
 	}
 }
