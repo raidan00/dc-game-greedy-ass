@@ -1,6 +1,5 @@
 <script>
 	import { onMount, onDestroy } from "svelte";
-	import { power, influence, winLooseMsg } from "./store.js";
 	import g from "./global.js";
 	import Card from "./Card.svelte";
 
@@ -40,7 +39,7 @@
 	hide();
 </script>
 
-{#if show && !$winLooseMsg}
+{#if show }
 	<div class="main">
 		{#each config as el, i}
 			<Card {el} hide={hide}/>
