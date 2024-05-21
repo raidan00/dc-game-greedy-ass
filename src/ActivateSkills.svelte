@@ -3,10 +3,14 @@
 	import models from "./models.js";
 	import * as t from "three"
 	import * as dc from 'dvijcock';
+	import { notifier } from '@beyonk/svelte-notifications'
 
 	function antiCapitalism(){
 		if(!g.activeHuman)return;
-		if(g.activeHuman.dcData.money-10 < 0)return;
+		if(g.activeHuman.dcData.money-10 < 0){
+			notifier.warning("This human don't have enought money", {timeout: 5000})
+			return;
+		};
 		g.activeHuman.dcData.money -= 10;
 		let sign = models.sign.scene.children[0].clone();
 		sign.position.set(g.activeHuman.position.x, 2, g.activeHuman.position.z);
