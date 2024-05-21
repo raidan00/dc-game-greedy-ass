@@ -23,6 +23,14 @@
 				}else{
 					coin = models.money.scene.children[0].clone();
 					coin.position.set(0, 2, 0);
+					coin.dcData = {
+						onCollision(tObj){
+							if(tObj.dcData.type != "human")return;
+							tObj.dcData.money++;
+							g.dcWorld.remove(coin);
+							coin = null;
+						}
+					}
 					g.dcWorld.add(coin);
 					g.assMoney--;
 					if(g.dcLogic.arrowAndInfrom){
