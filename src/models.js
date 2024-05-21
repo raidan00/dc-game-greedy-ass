@@ -14,7 +14,7 @@ async function loadModel(val){
 	if(import.meta.env.MODE == "development"){
 		models[url.match(/([A-Za-z0-9_.-]+)\.glb+/)[1]] = model;
 	}else{
-		models[url.match(/([A-Za-z0-9_.-]+)-.+\.glb+/)[1]] = model;
+		models[url.match(/([A-Za-z0-9_.-]+)-\w+\.glb+/)[1]] = model;
 	}
 }
 export function loadModels(){
