@@ -6,7 +6,10 @@
 	import { notifier } from '@beyonk/svelte-notifications'
 
 	function antiCapitalism(){
-		if(!g.activeHuman)return;
+		if(!g.activeHuman){
+			notifier.warning("Select human", {timeout: 3000})
+			return;
+		};
 		if(g.activeHuman.dcData.money-10 < 0){
 			notifier.warning("This human don't have enought money", {timeout: 5000})
 			return;

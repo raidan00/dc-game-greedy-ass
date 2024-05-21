@@ -15,7 +15,7 @@
 	<div class="main">
 		<div class="msg">
 			<div>
-				You win
+				You did it!
 			</div>
 			<button on:click={back}>
 				Back
