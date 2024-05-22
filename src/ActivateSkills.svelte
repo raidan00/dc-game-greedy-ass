@@ -1,4 +1,5 @@
 <script>
+	import { onMount, onDestroy } from "svelte";
 	import g from "./global.js";
 	import models from "./models.js";
 	import * as t from "three"
@@ -48,7 +49,22 @@
 				}
 			}
 	}
+	let cummunismUse = Date.now();
+	let stopped = false;
+	let strTimer = "";
+	function tick(){
+		if(stopped)return;
+		let diff = 1-(Date.now()-cummunismUse)/g.communismCooldown;
+		let deg = 360*diff;
+		strTimer = `background: conic-gradient(#454545 ${deg}deg, white ${deg+1}deg); ${deg<0? "":"border:0px"}`;
+		requestAnimationFrame(tick);
+	}
+	tick();
+	onDestroy(() => {
+		stopped = true;
+	});
 	function communism(){
+		cummunismUse = Date.now();
 	}
 	function onKeyDown(e){
 		switch(e.code){
@@ -63,7 +79,7 @@
 </script>
 
 <button class="skill1" on:click={antiCapitalism}>anti capitalism</button>
-<button class="skill2" on:click={communism}>communism on borders</button>
+<button style={strTimer} class="skill2" on:click={communism}>communism on borders</button>
 <svelte:window on:keydown={onKeyDown}/>
 
 <style>
