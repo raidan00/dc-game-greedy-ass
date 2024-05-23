@@ -28,11 +28,8 @@ export default class {
 			pushVec.multiplyScalar(pushForce*moveDirection.touchFactor);
 			objThree.dcData.rbody.applyCentralForce(ammoTmp.vec(pushVec.x, 0, pushVec.y));
 		}
-		if(!objThree.dcData.tickBeforePhysics){
-			objThree.dcData.tickBeforePhysics = tickBeforePhysics;
-		}else{
-			objThree.dcData.tickBeforePhysics = [objThree.dcData.tickBeforePhysics, tickBeforePhysics];
-		}
+		objThree.dcData.tickBeforePhysics = tickBeforePhysics;
+		this.objThree = objThree;
 		this.div = document.createElement('div');
 		this.div.className = 'dvijcock-conroller';
 		document.body.appendChild(this.div);
@@ -43,5 +40,6 @@ export default class {
 	destroy(){
 		this.app.$destroy();
 		this.div.remove();
+		delete this.objThree.dcData.tickBeforePhysics;
 	}
 }
