@@ -7,6 +7,15 @@ import models from "./models.js";
 import g from "./global.js";
 import { winMsg } from './WinMsg.svelte';
 
+let config = {
+	assMoney:{
+		howToPlay: 3,
+		lvl1: 100,
+		lvl2: 200,
+		lvl3: 500,
+		lvl4: 1000,
+	},
+}
 export default class{
 	constructor(){}
 	init(){
@@ -14,16 +23,16 @@ export default class{
 		let route = storeGet(routeStore);
 		let dcWorld = g.dcWorld = this.dcWorld;
 		g.dcLogic = this;
-		g.assMoney = 3;
+		g.assMoney = config.assMoney[route];
 
-		dcWorld.camera = models.howToPlay.cameras[0].clone();
+		dcWorld.camera = models[route].cameras[0].clone();
 		this.controls = new OrbitControls(dcWorld.camera, dcWorld.renderer.domElement);
 		this.controls.enablePan = false;
 
 		dcWorld.scene.add(dcWorld.camera);
 		dcWorld.scene.add(dc.defaultLights);
 
-		let wordScene = models.howToPlay.scene.clone();
+		let wordScene = models[route].scene.clone();
 		dcWorld.add(wordScene);
 		let humans = wordScene.getObjectsByUserDataProperty("HumanPlace", true);
 		humans = humans.map((objPlace)=>{
