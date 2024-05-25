@@ -82,6 +82,7 @@ export default class {
 		objThree.dcData.rbody = rbody;
 		objThree.dcData.onBeforePhysics = [];
 		objThree.dcData.onAfterPhysics = [];
+		objThree.dcData.onCollision = [];
 
 		let collisionGroup = objThree.dcData.collisionGroup || objThree.dcData.collisionFilter
 			|| objThree.userData.collisionGroup || objThree.userData.collisionFilter
@@ -169,8 +170,8 @@ export default class {
 				//if(distance > 0.0) continue;
 				let rb0 = Ammo.castObject(contactManifold.getBody0(), Ammo.btRigidBody);
 				let rb1 = Ammo.castObject(contactManifold.getBody1(), Ammo.btRigidBody);
-				if(rb0.objThree?.dcData?.onCollision) rb0.objThree.dcData.onCollision(rb1.objThree);
-				if(rb1.objThree?.dcData?.onCollision) rb1.objThree.dcData.onCollision(rb0.objThree);
+				if(rb0.objThree?.dcData?.onCollision?.length) runFuncArr(rb0.objThree.dcData.onCollision, rb1.objThree);
+				if(rb1.objThree?.dcData?.onCollision?.length) runFuncArr(rb1.objThree.dcData.onCollision, rb0.objThree);
 				continue mainLoop;
 			}
 		}
