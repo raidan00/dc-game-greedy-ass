@@ -21,33 +21,31 @@
 		g.dcWorld.add(sign);
 		sign.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
 		let coin;
-		sign.dcData.tickAfterPhysics =(delta)=>{
-				if(coin){
-					let velocity = coin.dcData.rbody.getLinearVelocity();
-					let velVec = new t.Vector3(velocity.x(), velocity.y(), velocity.z());
-					if(velVec.length()>3)return;
-					let pushVec = sign.position.clone().sub(coin.position).normalize().multiplyScalar(1);
-					coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
-				}else{
-					coin = models.money.scene.children[0].clone();
-					coin.position.set(0, 2, 0);
-					coin.dcData = {
-						onCollision(tObj){
-							if(tObj.dcData.type != "human")return;
-							tObj.dcData.money++;
-							g.dcWorld.remove(coin);
-							coin = null;
-						}
-					}
-					g.dcWorld.add(coin);
-					g.assMoney--;
-					if(g.dcLogic.arrowAndInfrom){
-						g.dcLogic.arrowAndInfrom.destroy();
-						let str = `Step3\n Pick up coin`
-						g.dcLogic.arrowAndInfrom = new dc.ArrowAndInfrom(str, models.arrow.scene, g.activeHuman, coin, 6);
-					}
+		sign.dcData.onAfterPhysics.push(()=>{
+			if(coin){
+				let velocity = coin.dcData.rbody.getLinearVelocity();
+				let velVec = new t.Vector3(velocity.x(), velocity.y(), velocity.z());
+				if(velVec.length()>3)return;
+				let pushVec = sign.position.clone().sub(coin.position).normalize().multiplyScalar(1);
+				coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
+			}else{
+				coin = models.money.scene.children[0].clone();
+				coin.position.set(0, 2, 0);
+				g.dcWorld.add(coin);
+				coin.dcData.onCollision.push((tObj)=>{
+					if(tObj.dcData.type != "human")return;
+					tObj.dcData.money++;
+					g.dcWorld.remove(coin);
+					coin = null;
+				});
+				g.assMoney--;
+				if(g.dcLogic.arrowAndInfrom){
+					g.dcLogic.arrowAndInfrom.destroy();
+					let str = `Step3\n Pick up coin`
+					g.dcLogic.arrowAndInfrom = new dc.ArrowAndInfrom(str, models.arrow.scene, g.activeHuman, coin, 6);
 				}
 			}
+		});
 	}
 	let cummunismUse = Date.now();
 	let stopped = false;

@@ -46,12 +46,12 @@ export default class{
 			return human;
 		})
 		let ass = wordScene.getObjectByName("Ass");
-		ass.dcData.onCollision = (tObj)=>{
+		ass.dcData.onCollision.push((tObj)=>{
 			if(tObj.name != "human" && tObj.name != "sign") return;
 			let impulse2d = new t.Vector2(tObj.position.x, tObj.position.z).normalize();
 			let impulse = new t.Vector3(impulse2d.x, 1, impulse2d.y).multiplyScalar(0.5);
 			tObj.dcData.rbody.applyCentralImpulse(dc.ammoTmp.vec(impulse.x, impulse.y, impulse.z));
-		};
+		});
 		wordScene.getObjectByName("Border").visible = false;
 		if(route == "howToPlay"){
 			this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step1\n Click on human to take control`,
@@ -59,14 +59,14 @@ export default class{
 		};
 		let target = models.target.scene.clone();
 		target.scale.set(1.5, 1.5, 1.5);
+		let start = Date.now();
 		target.dcData = {
-			tickAfterPhysics(delta){
+			onAfterPhysics: [ (delta)=>{
 				if(g.activeHuman){
 					target.position.set(g.activeHuman.position.x, g.activeHuman.position.y-1.1, g.activeHuman.position.z);
-					target.rotation.y = (Date.now()-this.start)*0.001;
+					target.rotation.y = (Date.now()-start)*0.001;
 				}
-			},
-			start: Date.now(),
+			} ],
 		}
 		dcWorld.scene.add(target);
 		let setActiveHuman = (obj)=>{
