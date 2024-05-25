@@ -20,4 +20,4 @@ async function loadModel(val){
 export function loadModels(){
 	let load = Object.values(urls).map(val=>loadModel(val));
 	return Promise.all(load);
-}
+};

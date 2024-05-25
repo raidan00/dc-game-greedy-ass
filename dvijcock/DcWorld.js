@@ -5,6 +5,11 @@ import ammoTmp from 'dvijcock/ammoTmp.js';
 import config from "dvijcock/config.js";
 import btShapeCreate from "dvijcock/btShapeCreate.js";
 
+function runFuncArr(fucnArr, ...rest){
+	for(let func of fucnArr){
+		func(...rest);
+	}
+}
 export default class {
 	constructor(){ 
 		this.renderer = renderer;
@@ -28,7 +33,6 @@ export default class {
 			if(this.destroyed) return;
 			let deltaTime = clock.getDelta();
 			this.onBeforePhysics(deltaTime);
-			this.tickBeforePhysics(deltaTime);
 			this.updateDynamic(deltaTime);
 			this.tickAfterPhysics(deltaTime);
 			this.onCollision();
@@ -115,10 +119,10 @@ export default class {
 	onBeforePhysics(deltaTime){
 		let objArr = [];
 		this.scene.traverse((objThree)=>{
-			if(objThree?.dcData?.onBeforePhysics?.length)arr.push(objThree);
+			if(objThree?.dcData?.onBeforePhysics?.length)objArr.push(objThree);
 		});
 		for(let objThree of objArr){
-			//objThree.dcData.runFuncArr("onBeforePhysics", deltaTime);
+			runFuncArr(objThree.dcData.onBeforePhysics, deltaTime);
 		}
 	}
 	tickAfterPhysics(deltaTime){
@@ -131,21 +135,6 @@ export default class {
 				el.dcData.tickAfterPhysics(deltaTime);
 			}else{
 				for(let func of el.dcData.tickAfterPhysics){
-					func(deltaTime);
-				}
-			}
-		}
-	}
-	tickBeforePhysics(deltaTime){
-		let arr = [];
-		this.scene.traverse((objThree)=>{
-			if(objThree?.dcData?.tickBeforePhysics)arr.push(objThree);
-		});
-		for(let el of arr){
-			if(typeof el.dcData.tickBeforePhysics == 'function'){
-				el.dcData.tickBeforePhysics(deltaTime);
-			}else{
-				for(let func of el.dcData.tickBeforePhysics){
 					func(deltaTime);
 				}
 			}
