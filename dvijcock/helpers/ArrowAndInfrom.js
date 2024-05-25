@@ -4,10 +4,10 @@ export default class {
 	constructor(text, model, from, to, height){ 
 		let arrow = model;
 		arrow.dcData = {
-			tickAfterPhysics(delta){
+			onAfterPhysics: [ (delta)=>{
 				arrow.position.set(from.position.x, height, from.position.z)
 				arrow.lookAt(to.position)
-			}
+			} ]
 		}
 		from.parent.add(arrow);
 		this.arrow = arrow;

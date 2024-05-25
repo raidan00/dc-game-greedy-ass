@@ -34,7 +34,7 @@ export default class {
 			let deltaTime = clock.getDelta();
 			this.onBeforePhysics(deltaTime);
 			this.updateDynamic(deltaTime);
-			this.tickAfterPhysics(deltaTime);
+			this.onAfterPhysics(deltaTime);
 			this.onCollision();
 			this.renderer.render( this.scene, this.camera );
 			requestAnimationFrame(tickDispayFps);
@@ -81,6 +81,7 @@ export default class {
 		rbody.objThree = objThree;
 		objThree.dcData.rbody = rbody;
 		objThree.dcData.onBeforePhysics = [];
+		objThree.dcData.onAfterPhysics = [];
 
 		let collisionGroup = objThree.dcData.collisionGroup || objThree.dcData.collisionFilter
 			|| objThree.userData.collisionGroup || objThree.userData.collisionFilter
@@ -125,19 +126,13 @@ export default class {
 			runFuncArr(objThree.dcData.onBeforePhysics, deltaTime);
 		}
 	}
-	tickAfterPhysics(deltaTime){
-		let arr = [];
+	onAfterPhysics(deltaTime){
+		let objArr = [];
 		this.scene.traverse((objThree)=>{
-			if(objThree?.dcData?.tickAfterPhysics)arr.push(objThree);
+			if(objThree?.dcData?.onAfterPhysics?.length)objArr.push(objThree);
 		});
-		for(let el of arr){
-			if(typeof el.dcData.tickAfterPhysics == 'function'){
-				el.dcData.tickAfterPhysics(deltaTime);
-			}else{
-				for(let func of el.dcData.tickAfterPhysics){
-					func(deltaTime);
-				}
-			}
+		for(let objThree of objArr){
+			runFuncArr(objThree.dcData.onAfterPhysics, deltaTime);
 		}
 	}
 	updateDynamic(deltaTime){
