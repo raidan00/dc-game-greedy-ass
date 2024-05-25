@@ -27,6 +27,7 @@ export default class {
 		let tickDispayFps =()=>{
 			if(this.destroyed) return;
 			let deltaTime = clock.getDelta();
+			this.onBeforePhysics(deltaTime);
 			this.tickBeforePhysics(deltaTime);
 			this.updateDynamic(deltaTime);
 			this.tickAfterPhysics(deltaTime);
@@ -75,6 +76,8 @@ export default class {
 		}
 		rbody.objThree = objThree;
 		objThree.dcData.rbody = rbody;
+		objThree.dcData.onBeforePhysics = [];
+
 		let collisionGroup = objThree.dcData.collisionGroup || objThree.dcData.collisionFilter
 			|| objThree.userData.collisionGroup || objThree.userData.collisionFilter
 			|| config.collisionGroup || config.collisionFilter || 0b111111111111111111111111;
@@ -108,6 +111,15 @@ export default class {
 			}
 		}
 		removeRecursion(objThree);
+	}
+	onBeforePhysics(deltaTime){
+		let objArr = [];
+		this.scene.traverse((objThree)=>{
+			if(objThree?.dcData?.onBeforePhysics?.length)arr.push(objThree);
+		});
+		for(let objThree of objArr){
+			//objThree.dcData.runFuncArr("onBeforePhysics", deltaTime);
+		}
 	}
 	tickAfterPhysics(deltaTime){
 		let arr = [];
