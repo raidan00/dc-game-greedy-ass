@@ -17,6 +17,13 @@
 			return;
 		};
 		g.activeHuman.dcData.money -= price;
+		let success = Math.random()<=g.education;
+		if(g.dcLogic.arrowAndInfrom)success=true;
+		if(!success){
+			notifier.danger("This human don't understand that greedy ass is bad, upgrade education or try again.", {timeout: 5000})
+			return;
+		}
+
 		let sign = models.sign.scene.children[0].clone();
 		sign.position.set(g.activeHuman.position.x, 2, g.activeHuman.position.z);
 		g.dcWorld.add(sign);

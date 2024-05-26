@@ -7,7 +7,7 @@
 		{
 			name: "antiCapitalismPrice",
 			text: "Cost of anti-capitalism society creation price",
-			arr: [60, 50, 40, 30, 20, 10],
+			arr: [25, 20, 17, 15, 12, 10],
 			formater: val=>val,
 			i: 0,
 		},
@@ -21,7 +21,7 @@
 		{
 			name: "education",
 			text: "Humans education",
-			arr: [0.1, 0.2, 0.4, 0.6, 0.8, 1],
+			arr: [0.5, 0.6, 0.7, 0.8, 0.9, 1],
 			formater: val=>val*100 + " %",
 			i: 0,
 		},

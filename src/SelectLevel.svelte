@@ -25,9 +25,6 @@
 	<button on:click={()=>setLvl("lvl3")}>
 		3
 	</button>
-	<button on:click={()=>setLvl("lvl4")}>
-		4
-	</button>
 </div>
 
 <style>

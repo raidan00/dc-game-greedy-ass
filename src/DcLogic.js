@@ -9,25 +9,22 @@ import { winMsg } from './WinMsg.svelte';
 
 let config = {
 	humanMoney:{
-		howToPlay: 10,
-		lvl1: 20,
-		lvl2: 10,
-		lvl3: 5,
-		lvl4: 0,
+		howToPlay: 50,
+		lvl1: 50,
+		lvl2: 50,
+		lvl3: 50,
 	},
 	assMoney:{
 		howToPlay: 3,
 		lvl1: 100,
 		lvl2: 200,
 		lvl3: 300,
-		lvl4: 400,
 	},
 	assPullDelay:{
 		howToPlay: 99999999999,
 		lvl1: 5000,
 		lvl2: 3000,
 		lvl3: 2000,
-		lvl4: 1000,
 	},
 }
 export default class{
