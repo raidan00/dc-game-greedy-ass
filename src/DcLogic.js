@@ -116,10 +116,9 @@ export default class{
 			for(let human of humans){
 				if(human.dcData.money<1)return;;
 				human.dcData.money--;
-				let coin = models.money.scene.children[0].clone();
+				let coin = models.assMoney.scene.children[0].clone();
 				coin.position.copy(human.position);
 				coin.position.y+= 5;
-				coin.material.color.setHex(0x71301c);
 				g.dcWorld.add(coin);
 				coin.dcData.onCollision.push((tObj)=>{
 					if(tObj != ass)return;

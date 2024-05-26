@@ -30,7 +30,7 @@
 				coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
 			}else{
 				coin = models.money.scene.children[0].clone();
-				coin.position.set(0, 2, 0);
+				coin.position.set(0, 2.55, 0);
 				g.dcWorld.add(coin);
 				coin.dcData.onCollision.push((tObj)=>{
 					if(tObj.dcData.type != "human")return;
