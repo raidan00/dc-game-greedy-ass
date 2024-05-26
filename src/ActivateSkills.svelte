@@ -62,7 +62,28 @@
 		stopped = true;
 	});
 	function communism(){
+		if(Date.now()-cummunismUse < g.communismCooldown)return;
+		let money = Math.floor(g.assMoney*0.1);
+		if(money <=1)return;
+		if(money >=20)money=20;
+		g.assMoney-=money;;
 		cummunismUse = Date.now();
+
+		for(let i=0; i<money; i++){
+			setTimeout(()=>{
+				if(stopped)return;
+				let coin = models.money.scene.children[0].clone();
+				coin.position.set(0, 2.55, 0);
+				g.dcWorld.add(coin);
+				coin.dcData.rbody.setLinearVelocity(dc.ammoTmp.vec(Math.random()*10-5, 15, Math.random()*10-5))
+				coin.dcData.rbody.setAngularVelocity(dc.ammoTmp.vec(Math.random()*4, Math.random()*4, Math.random()*4))
+				coin.dcData.onCollision.push((tObj)=>{
+					if(tObj.dcData.type != "human")return;
+					tObj.dcData.money++;
+					g.dcWorld.remove(coin);
+				});
+			},Math.random()*2000);
+		}
 	}
 	function onKeyDown(e){
 		switch(e.code){

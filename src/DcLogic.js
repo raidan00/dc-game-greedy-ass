@@ -11,16 +11,16 @@ let config = {
 	humanMoney:{
 		howToPlay: 10,
 		lvl1: 20,
-		lvl2: 15,
-		lvl3: 10,
-		lvl4: 5,
+		lvl2: 10,
+		lvl3: 5,
+		lvl4: 0,
 	},
 	assMoney:{
 		howToPlay: 3,
 		lvl1: 100,
 		lvl2: 200,
-		lvl3: 500,
-		lvl4: 1000,
+		lvl3: 300,
+		lvl4: 400,
 	},
 	assPullDelay:{
 		howToPlay: 99999999999,
@@ -70,6 +70,8 @@ export default class{
 			tObj.dcData.rbody.applyCentralImpulse(dc.ammoTmp.vec(impulse.x, impulse.y, impulse.z));
 		});
 		wordScene.getObjectByName("Border").visible = false;
+		g.USSR = wordScene.getObjectByName("USSR");
+		g.USSR.visible = false;
 		if(route == "howToPlay"){
 			this.arrowAndInfrom = new dc.ArrowAndInfrom(`Step1\n Click on human to take control`,
 				models.arrow.scene, humans[0], humans[0], 6);
