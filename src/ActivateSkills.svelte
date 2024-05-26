@@ -17,6 +17,7 @@
 			return;
 		};
 		g.activeHuman.dcData.money -= price;
+		g.assMoney+=price;
 		let success = Math.random()<=g.education;
 		if(g.dcLogic.arrowAndInfrom)success=true;
 		if(!success){
