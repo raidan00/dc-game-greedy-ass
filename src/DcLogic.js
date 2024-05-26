@@ -8,11 +8,25 @@ import g from "./global.js";
 import { winMsg } from './WinMsg.svelte';
 
 let config = {
+	humanMoney:{
+		howToPlay: 10,
+		lvl1: 20,
+		lvl2: 15,
+		lvl3: 10,
+		lvl4: 5,
+	},
 	assMoney:{
 		howToPlay: 3,
 		lvl1: 100,
 		lvl2: 200,
 		lvl3: 500,
+		lvl4: 1000,
+	},
+	assPullDelay:{
+		howToPlay: 99999999999,
+		lvl1: 5000,
+		lvl2: 3000,
+		lvl3: 2000,
 		lvl4: 1000,
 	},
 }
@@ -42,7 +56,7 @@ export default class{
 			human.dcData = {
 				setFriction: 3,
 				type: "human",
-				money: 10,
+				money: config.humanMoney[route],
 			}
 			dcWorld.add(human);
 			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
@@ -98,6 +112,29 @@ export default class{
 			}
 		}
 		window.addEventListener('click', this.onClick);
+		this.assPullInterval = setInterval(()=>{
+			for(let human of humans){
+				if(human.dcData.money<1)return;;
+				human.dcData.money--;
+				let coin = models.money.scene.children[0].clone();
+				coin.position.copy(human.position);
+				coin.position.y+= 5;
+				coin.material.color.setHex(0x71301c);
+				g.dcWorld.add(coin);
+				coin.dcData.onCollision.push((tObj)=>{
+					if(tObj != ass)return;
+					g.assMoney++;
+					dcWorld.remove(coin);
+				});
+				coin.dcData.onBeforePhysics.push((tObj)=>{
+					let velocity = coin.dcData.rbody.getLinearVelocity();
+					let velVec = new t.Vector3(velocity.x(), velocity.y(), velocity.z());
+					if(velVec.length()>3)return;
+					let pushVec = coin.position.clone().normalize().multiplyScalar(1).negate();
+					coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
+				});
+			}
+		}, config.assPullDelay[route]);
 		this.resultInterval = setInterval(()=>{
 			if(g.assMoney < 1){
 				winMsg.set(true);
@@ -111,5 +148,6 @@ export default class{
 		if(this.arrowAndInfrom)this.arrowAndInfrom.destroy();
 		if(this.moveController)this.moveController.destroy();
 		clearInterval(this.resultInterval);
+		clearInterval(this.assPullInterval);
 	}
 }
