@@ -7,14 +7,14 @@
 		{
 			name: "antiCapitalismPrice",
 			text: "Cost of anti-capitalism society creation price",
-			arr: [100, 80, 60, 40, 20, 10],
+			arr: [60, 50, 40, 30, 20, 10],
 			formater: val=>val,
 			i: 0,
 		},
 		{
 			name: "communismCooldown",
 			text: "Communism on border cooldown",
-			arr: [10000, 8000, 6000, 4000, 3000, 2000],
+			arr: [20000, 16000, 14000, 12000, 10000, 8000],
 			formater: val=>val/1000 + " seconds",
 			i: 0,
 		},

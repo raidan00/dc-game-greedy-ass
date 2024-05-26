@@ -11,11 +11,12 @@
 			notifier.warning("Select human", {timeout: 3000})
 			return;
 		};
-		if(g.activeHuman.dcData.money-10 < 0){
+		let price = g.antiCapitalismPrice;
+		if(g.activeHuman.dcData.money-price < 0){
 			notifier.warning("This human don't have enought money", {timeout: 5000})
 			return;
 		};
-		g.activeHuman.dcData.money -= 10;
+		g.activeHuman.dcData.money -= price;
 		let sign = models.sign.scene.children[0].clone();
 		sign.position.set(g.activeHuman.position.x, 2, g.activeHuman.position.z);
 		g.dcWorld.add(sign);
@@ -63,6 +64,10 @@
 	});
 	function communism(){
 		if(Date.now()-cummunismUse < g.communismCooldown)return;
+		g.USSR.visible = true;
+		setTimeout(()=>{
+			g.USSR.visible = false;
+		},4000);
 		let money = Math.floor(g.assMoney*0.1);
 		if(money <=1)return;
 		if(money >=20)money=20;
