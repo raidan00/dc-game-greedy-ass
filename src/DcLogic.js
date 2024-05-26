@@ -39,10 +39,13 @@ export default class{
 			objPlace.removeFromParent();
 			let human = models.human.scene.children[0].clone();
 			human.position.copy(objPlace.position);
+			human.dcData = {
+				setFriction: 3,
+				type: "human",
+				money: 10,
+			}
 			dcWorld.add(human);
 			human.dcData.rbody.setAngularFactor(dc.ammoTmp.vec(0, 0, 0));
-			human.dcData.type = "human";
-			human.dcData.money = 10;
 			return human;
 		})
 		let ass = wordScene.getObjectByName("Ass");
