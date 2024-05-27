@@ -21,7 +21,7 @@
 		{
 			name: "education",
 			text: "Humans education",
-			arr: [0.60, 0.7, 0.8, 0.9, 0.95, 1],
+			arr: [0.4, 0.6, 0.7, 0.8, 0.9, 1],
 			formater: val=>val*100 + " %",
 			i: 0,
 		},
