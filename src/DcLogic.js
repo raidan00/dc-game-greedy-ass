@@ -112,6 +112,7 @@ export default class{
 			for(let human of humans){
 				if(human.dcData.money<1)return;;
 				human.dcData.money--;
+				let creation = Date.now();
 				let coin = models.assMoney.scene.children[0].clone();
 				coin.position.copy(human.position);
 				coin.position.y+= 5;
@@ -127,6 +128,10 @@ export default class{
 					if(velVec.length()>3)return;
 					let pushVec = coin.position.clone().normalize().multiplyScalar(1).negate();
 					coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
+					if(Date.now() > creation + 30000){
+						dcWorld.remove(coin);
+						human.dcData.money++;
+					}
 				});
 			}
 		}, config.assPullDelay[route]);
