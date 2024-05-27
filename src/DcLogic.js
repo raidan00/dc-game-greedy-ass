@@ -124,9 +124,11 @@ export default class{
 				});
 				coin.dcData.onBeforePhysics.push((tObj)=>{
 					let velocity = coin.dcData.rbody.getLinearVelocity();
-					let velVec = new t.Vector3(velocity.x(), 0, velocity.z());
+					let velVec = new t.Vector3(velocity.x(), velocity.y(), velocity.z());
 					if(velVec.length()>3)return;
-					let pushVec = coin.position.clone().normalize().multiplyScalar(1).negate();
+					let pushVec = coin.position.clone()
+					pushVec.y = 0;
+					pushVec.normalize().multiplyScalar(1).negate();
 					coin.dcData.rbody.applyCentralForce(dc.ammoTmp.vec(pushVec.x, pushVec.y, pushVec.z));
 					if(Date.now() > creation + 30000){
 						dcWorld.remove(coin);
