@@ -50,7 +50,7 @@
 				g.assMoney--;
 				if(g.dcLogic.arrowAndInfrom){
 					g.dcLogic.arrowAndInfrom.destroy();
-					let str = `Step3\n Pick up coin`
+					let str = `Step3\n Pick up coins`
 					g.dcLogic.arrowAndInfrom = new dc.ArrowAndInfrom(str, models.arrow.scene, g.activeHuman, coin, 6);
 				}
 			}
@@ -72,6 +72,10 @@
 	});
 	function communism(){
 		if(Date.now()-cummunismUse < g.communismCooldown)return;
+		if(g.dcLogic.arrowAndInfrom){
+			notifier.warning("Not available in tutorial", {timeout: 5000})
+			return;
+		};
 		g.USSR.visible = true;
 		setTimeout(()=>{
 			g.USSR.visible = false;
